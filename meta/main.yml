@@ -4,10 +4,12 @@ galaxy_info:
   author: pjan vandaele
   description: set/update the hostname
   min_ansible_version: 1.3
+  license: MIT
   platforms:
   - name: Ubuntu
     versions:
     - all
   categories:
   - system
-  dependencies: []
+
+dependencies: []
