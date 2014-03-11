@@ -1,0 +1,4 @@
+# file: hostname/defaults/main.yml
+
+fqdn: localhost
+hostname: localhost

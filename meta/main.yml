@@ -1,0 +1,13 @@
+# file: hostname/meta/main.yml
+
+galaxy_info:
+  author: pjan vandaele
+  description: set the hostname
+  min_ansible_version: 1.3
+  platforms:
+  - name: Ubuntu
+    versions:
+    - all
+  categories:
+  - system
+  dependencies: []
