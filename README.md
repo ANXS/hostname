@@ -5,8 +5,8 @@ Set/Update the hostname
 #### Variables
 
 ```yaml
-hostname_fqdn:
-hostname_name:
+hostname_fqdn: # The Fully Qualified Domain Name. e.g. parakeet.twitter.com
+hostname_name: # The Hostname. e.g. parakeet
 ```
 
 #### License
