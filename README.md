@@ -1,4 +1,4 @@
-## Ansibles - hostname
+## Ansibles - hostname [![Build Status](https://travis-ci.org/Ansibles/hostname.png)](https://travis-ci.org/Ansibles/hostname)
 
 Set/Update the hostname
 
