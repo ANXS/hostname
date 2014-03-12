@@ -2,11 +2,11 @@
 
 - name: Hostname | Update the hostname (pt. 1) - hostname cmd
   hostname:
-    name: "{{hostname_name}}"
+    name: "{{ hostname_name }}"
 
 - name: Hostname | Update the hostname (pt. 2) - (/etc/hostname)
-  template:
-    src: etc_hostname.j2
+  copy:
+    content: "{{ hostname_name }}"
     dest: /etc/hostname
     owner: root
     group: root
