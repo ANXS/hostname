@@ -5,8 +5,8 @@
     name: "{{inventory_hostname_short}}"
 
 - name: Hostname | Update the hostname (pt. 2) - (/etc/hostname)
-  template:
-    src: etc_hostname.j2
+  copy:
+    content: "{{inventory_hostname_short}}"
     dest: /etc/hostname
     owner: root
     group: root
