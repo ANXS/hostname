@@ -5,7 +5,29 @@ Ansible role that sets the hostname and FQDN of the node.
 
 #### Variables
 
-This completely depends on your host inventory. Add the hosts to your inventory with their fqdn (e.g. foo.bar.com), and the role will take care of setting your hostname accordingly (hostname: foo, fqdn: foo.bar.com). If you just name it with the hostname in the inventory, it will similarly work (hostname set, but no fqdn attached to it).
+This role fully depends on your ansible hosts inventory.
+
+Add the hosts to your inventory with their FQDN (e.g. foo.bar.com), and the role will take care of setting your hostname accordingly (hostname: foo, FQDN: foo.bar.com).
+
+If you just name it with the hostname in the inventory, it will similarly work (hostname set, but no FQDN attached to it).
+
+
+#### Example
+
+Your inventory file should look like this:
+
+```yaml
+foo.bar.com     ansible_ssh_host=xxx.xxx.xxx.xxx    ansible_ssh_port=22
+baz.bar.com     ansible_ssh_host=xxx.xxx.xxx.xxx    ansible_ssh_port=22
+```
+
+And the structure of the files in your host_vars folders should match accordingly:
+
+```
+- host_vars
+    |- foo.bar.com
+    |- baz.bar.com
+```
 
 
 #### License
