@@ -1,17 +1,17 @@
 ## Ansibles - hostname [![Build Status](https://travis-ci.org/Ansibles/hostname.png)](https://travis-ci.org/Ansibles/hostname)
 
-Set/Update the hostname
+Ansible role that sets the hostname and FQDN of the node.
+
 
 #### Variables
 
-```yaml
-hostname_fqdn: # The Fully Qualified Domain Name. e.g. parakeet.twitter.com
-hostname_name: # The Hostname. e.g. parakeet
-```
+This completely depends on your host inventory. Add the hosts to your inventory with their fqdn (e.g. foo.bar.com), and the role will take care of setting your hostname accordingly (hostname: foo, fqdn: foo.bar.com). If you just name it with the hostname in the inventory, it will similarly work (hostname set, but no fqdn attached to it).
+
 
 #### License
 
 Licensed under the MIT License. See the LICENSE file for details.
+
 
 #### Feedback, bug-reports, requests, ...
 

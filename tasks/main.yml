@@ -2,7 +2,7 @@
 
 - name: Hostname | Update the hostname (pt. 1) - hostname cmd
   hostname:
-    name: "{{hostname_name}}"
+    name: "{{inventory_hostname_short}}"
 
 - name: Hostname | Update the hostname (pt. 2) - (/etc/hostname)
   template:
@@ -15,8 +15,6 @@
 - name: Hostname | Update the hostname (pt. 3) - (/etc/hosts)
   lineinfile:
     dest: /etc/hosts
-    regexp: "^127.0.0.1    {{ hostname_fqdn }}    {{ hostname_name }}"
-    line: "127.0.0.1    {{ hostname_fqdn }}    {{ hostname_name }}"
+    regexp: "^127.0.0.1"
+    line: "127.0.0.1{{'\t'}}{{inventory_hostname}}{% if inventory_hostname != inventory_hostname_short %}{{'\t'}}{{inventory_hostname_short}}{% endif %}"
     state: present
-    backup: yes
-    backrefs: yes
