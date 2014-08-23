@@ -6,7 +6,7 @@
 
 - name: Hostname | Update the hostname (pt. 2) - (/etc/hostname)
   copy:
-    content: "{{inventory_hostname_short}}"
+    content: "{{inventory_hostname_short}}{{'\n'}}"
     dest: /etc/hostname
     owner: root
     group: root
