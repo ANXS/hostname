@@ -1,4 +1,4 @@
-## Ansibles - hostname [![Build Status](https://travis-ci.org/Ansibles/hostname.png)](https://travis-ci.org/Ansibles/hostname)
+## ANXS - hostname [![Build Status](https://travis-ci.org/ANXS/hostname.png)](https://travis-ci.org/ANXS/hostname)
 
 Ansible role that sets the hostname and FQDN of the node.
 
@@ -37,4 +37,4 @@ Licensed under the MIT License. See the LICENSE file for details.
 
 #### Feedback, bug-reports, requests, ...
 
-Are [welcome](https://github.com/ansibles/hostname/issues)!
+Are [welcome](https://github.com/ANXS/hostname/issues)!
