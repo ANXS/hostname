@@ -13,4 +13,6 @@ galaxy_info:
   categories:
   - system
 
-dependencies: []
+dependencies: 
+  - role: ANXS.apt
+    when: hostname_avahi|lower == "true"

@@ -1,6 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+hostname_avahi = ENV.key?('hostname_avahi') ? ENV['hostname_avahi'] : 'false'
 Vagrant.configure('2') do |config|
   config.vm.define 'anxs' do |c|
     c.vm.box = 'ubuntu/trusty64'
@@ -11,6 +12,9 @@ Vagrant.configure('2') do |config|
       ansible.sudo = true
       ansible.inventory_path = 'vagrant-inventory'
       ansible.host_key_checking = false
+      ansible.extra_vars = {
+        hostname_avahi: hostname_avahi
+      }
     end
   end
 end
