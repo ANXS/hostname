@@ -1,0 +1,3 @@
+# file: hostname/defaults/main.yml
+
+hostname_avahi: no
