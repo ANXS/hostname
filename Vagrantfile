@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-hostname_avahi = ENV.key?('hostname_avahi') ? ENV['hostname_avahi'] : 'false'
+hostname_avahi = ENV.key?('HOSTNAME_AVAHI') ? ENV['HOSTNAME_AVAHI'] : 'false'
 Vagrant.configure('2') do |config|
   config.vm.define 'anxs' do |c|
     c.vm.box = 'ubuntu/trusty64'
