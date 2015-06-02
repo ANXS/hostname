@@ -1,3 +1,5 @@
 # file: hostname/defaults/main.yml
 
 hostname_avahi: no
+hostname: "{{ inventory_hostname }}"
+hostname_short: "{{ inventory_hostname_short }}"
