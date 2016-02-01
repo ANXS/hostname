@@ -1,10 +1,10 @@
-# file: hostname/tasks/main.yml
+---
 
-- name: Hostname | Update the hostname (pt. 1) - hostname cmd
+- name: Update the hostname (pt. 1) - hostname cmd
   hostname:
     name: "{{hostname_short}}"
 
-- name: Hostname | Update the hostname (pt. 2) - (/etc/hostname)
+- name: Update the hostname (pt. 2) - (/etc/hostname)
   copy:
     content: "{{hostname_short}}{{'\n'}}"
     dest: /etc/hostname
@@ -12,16 +12,13 @@
     group: root
     mode: 0644
 
-- name: Hostname | Update the IPv4 hostname (pt. 3) - (/etc/hosts)
+- name: Update the hostname (pt. 3) - (/etc/hosts)
   lineinfile:
     dest: /etc/hosts
-    regexp: "^127.0.0.1"
-    line: "127.0.0.1{{'\t'}}{{hostname}}{% if inventory_hostname != hostname_short %}{{'\t'}}{{hostname_short}}{% endif %}{{'\t'}}localhost"
+    regexp: item.regexp
+    line: item.line
     state: present
+  when:
+    - { regexp: "^127.0.0.1", line: "127.0.0.1{{'\t'}}{{hostname}}{% if inventory_hostname != hostname_short %}{{'\t'}}{{hostname_short}}{% endif %}{{'\t'}}localhost" }
+    - { regexp: "^::1", line: "::1{{'\t\t'}}{{hostname}}{% if inventory_hostname != hostname_short %}{{'\t'}}{{hostname_short}}{% endif %}{{'\t'}}localhost ip6-localhost ip6-loopback" }
 
-- name: Hostname | Update the IPv6 hostname (pt. 3) - (/etc/hosts)
-  lineinfile:
-    dest: /etc/hosts
-    regexp: "^::1"
-    line: "::1{{'\t\t'}}{{hostname}}{% if inventory_hostname != hostname_short %}{{'\t'}}{{hostname_short}}{% endif %}{{'\t'}}localhost ip6-localhost ip6-loopback"
-    state: present
