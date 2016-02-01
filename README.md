@@ -14,7 +14,6 @@ If you just name it with the hostname in the inventory, it will similarly work (
 You can override the hostname and hostname_short in the config.
 
 ```yaml
-hostname_avahi: no              # You may optionall install avahi-mdns and libnss-mdns. This is useful in vagrant.
 hostname: "{{ inventory_hostname }}"
 hostname_short: "{{ inventory_hostname_short }}"
 ```

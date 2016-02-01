@@ -25,7 +25,3 @@
     regexp: "^::1"
     line: "::1{{'\t\t'}}{{hostname}}{% if inventory_hostname != hostname_short %}{{'\t'}}{{hostname_short}}{% endif %}{{'\t'}}localhost ip6-localhost ip6-loopback"
     state: present
-
-- name: Hostname | Install MDNS Components
-  apt: pkg=avahi-daemon,libnss-mdns state=latest
-  when: "'{{ansible_os_family}}' == 'Debian' and {{hostname_avahi}}"
