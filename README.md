@@ -11,10 +11,6 @@ Add the hosts to your inventory with their FQDN (e.g. foo.bar.com), and the role
 
 If you just name it with the hostname in the inventory, it will similarly work (hostname set, but no FQDN attached to it).
 
-```yaml
-hostname_avahi: no              # You may optionall install avahi-mdns and libnss-mdns. This is useful in vagrant.
-```
-
 #### Example
 
 Your inventory file should look like this:
