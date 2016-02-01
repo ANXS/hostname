@@ -1,3 +1,10 @@
-# file: hostname/defaults/main.yml
+---
 
-hostname_avahi: no
+hostname: "{{ inventory_hostname }}"
+hostname_short: "{{ inventory_hostname_short }}"
+
+hostname_hosts:
+    - { regexp: "^127.0.0.1", line: "127.0.0.1\t{{hostname}}{% if inventory_hostname != hostname_short %}\t{{hostname_short}}{% endif %}\tlocalhost" }
+    - { regexp: "^::1", line: "::1\t\t{{hostname}}{% if inventory_hostname != hostname_short %}\t{{hostname_short}}{% endif %}\tlocalhost\tip6-localhost\tip6-loopback" }
+
+hostname_hosts_add: []
