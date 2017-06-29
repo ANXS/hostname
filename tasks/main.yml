@@ -1,5 +1,11 @@
 # file: hostname/tasks/main.yml
 
+- name: Hostname | Ensure dbus installed
+  apt:
+    name: dbus
+    state: installed
+  tags: hostname
+
 - name: Hostname | Update the hostname (pt. 1) - hostname cmd
   hostname:
     name: "{{inventory_hostname_short}}"
