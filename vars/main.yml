@@ -1,0 +1,3 @@
+anxs_hostname_packages:
+- dbus
+- policykit-1
