@@ -2,9 +2,11 @@
 
 - name: Hostname | Ensure dbus installed
   apt:
-    name: dbus
+    name: "{{item}}"
     state: installed
   tags: hostname
+  with_items: "{{anxs_hostname_packages}}"
+  when: ansible_os_family == "Debian"
 
 - name: Hostname | Update the hostname (pt. 1) - hostname cmd
   hostname:
@@ -34,4 +36,4 @@
 
 - name: Hostname | Install MDNS Components
   apt: pkg=avahi-daemon,libnss-mdns state=latest
-  when: "'{{ansible_os_family}}' == 'Debian' and {{hostname_avahi}}"
+  when: 'ansible_os_family == "Debian" and hostname_avahi'
