@@ -3,4 +3,4 @@
     - 'defaults/main.yml'
     - 'vars/main.yml'    
   tasks:
-    - include: 'tasks/main.yml'
+    - include_tasks: 'tasks/main.yml'
