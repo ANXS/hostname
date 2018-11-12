@@ -1,11 +1,9 @@
-# file: hostname/tasks/main.yml
-
+---
 - name: Hostname | Ensure dbus installed
   apt:
-    name: "{{item}}"
+    name: "{{anxs_hostname_packages}}"
     state: installed
   tags: hostname
-  with_items: "{{anxs_hostname_packages}}"
   when: ansible_os_family == "Debian"
 
 - name: Hostname | Update the hostname (pt. 1) - hostname cmd
@@ -35,5 +33,7 @@
     state: present
 
 - name: Hostname | Install MDNS Components
-  apt: pkg=avahi-daemon,libnss-mdns state=latest
+  apt:
+    name: "{{anxs_hostname_mdns_packages}}"
+    state: installed
   when: 'ansible_os_family == "Debian" and hostname_avahi'
