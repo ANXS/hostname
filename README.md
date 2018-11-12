@@ -1,4 +1,4 @@
-## ANXS - hostname [![Build Status](https://travis-ci.org/ANXS/hostname.png)](https://travis-ci.org/ANXS/hostname)
+## ANXS - hostname [![Build Status](https://travis-ci.com/ANXS/hostname.png)](https://travis-ci.com/ANXS/hostname)
 
 Ansible role that sets the hostname and FQDN of the node.
 

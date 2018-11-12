@@ -1,5 +1,4 @@
-# file: hostname/meta/main.yml
-
+---
 galaxy_info:
   author: pjan vandaele
   company: ANXS
@@ -7,12 +6,11 @@ galaxy_info:
   min_ansible_version: 2.4.2.0
   license: MIT
   platforms:
-  - name: Ubuntu
-    versions:
-    - all
+    - name: Ubuntu
+      versions:
+        - all
   categories:
-  - system
+    - system
 
 dependencies: 
   - role: ANXS.apt
-    when: hostname_avahi|lower == "true"
