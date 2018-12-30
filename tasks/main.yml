@@ -2,7 +2,7 @@
 - name: Hostname | Ensure dbus installed
   apt:
     name: "{{anxs_hostname_packages}}"
-    state: installed
+    state: present
   tags: hostname
   when: ansible_os_family == "Debian"
 
@@ -35,5 +35,5 @@
 - name: Hostname | Install MDNS Components
   apt:
     name: "{{anxs_hostname_mdns_packages}}"
-    state: installed
+    state: present
   when: 'ansible_os_family == "Debian" and hostname_avahi'
