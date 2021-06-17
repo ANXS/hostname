@@ -1,16 +1,16 @@
 ---
-- name: Hostname | Ensure dbus installed
+- name: "Ensure dbus installed"
   apt:
     name: "{{anxs_hostname_packages}}"
     state: present
   tags: hostname
   when: ansible_os_family == "Debian"
 
-- name: Hostname | Update the hostname (pt. 1) - hostname cmd
+- name: "Update the hostname (pt. 1) - hostname cmd"
   hostname:
     name: "{{inventory_hostname_short}}"
 
-- name: Hostname | Update the hostname (pt. 2) - (/etc/hostname)
+- name: Update the hostname (pt. 2) - (/etc/hostname)
   copy:
     content: "{{inventory_hostname_short}}{{'\n'}}"
     dest: /etc/hostname
@@ -18,21 +18,29 @@
     group: root
     mode: 0644
 
-- name: Hostname | Update the IPv4 hostname (pt. 3) - (/etc/hosts)
+- name: "Update the IPv4 hostname (pt. 3) - (/etc/hosts)"
   lineinfile:
     dest: /etc/hosts
     regexp: "^127.0.0.1"
-    line: "127.0.0.1{{'\t'}}{{inventory_hostname}}{% if inventory_hostname != inventory_hostname_short %}{{'\t'}}{{inventory_hostname_short}}{% endif %}{{'\t'}}localhost"
+    line: >
+      127.0.0.1{{'\t'}}{{inventory_hostname}}
+      % if inventory_hostname != inventory_hostname_short %}{{'\t'}}{{inventory_hostname_short}}{% endif %}
+      {{'\t'}}localhost
     state: present
+  when: ansible_virtualization_type != 'docker'
 
-- name: Hostname | Update the IPv6 hostname (pt. 3) - (/etc/hosts)
+- name: "Update the IPv6 hostname (pt. 3) - (/etc/hosts)"
   lineinfile:
     dest: /etc/hosts
     regexp: "^::1"
-    line: "::1{{'\t\t'}}{{inventory_hostname}}{% if inventory_hostname != inventory_hostname_short %}{{'\t'}}{{inventory_hostname_short}}{% endif %}{{'\t'}}localhost ip6-localhost ip6-loopback"
+    line: >
+      ::1{{'\t\t'}}{{inventory_hostname}}
+      {% if inventory_hostname != inventory_hostname_short %}{{'\t'}}{{inventory_hostname_short}}{% endif %}
+      {{'\t'}}localhost ip6-localhost ip6-loopback
     state: present
+  when: ansible_virtualization_type != 'docker'
 
-- name: Hostname | Install MDNS Components
+- name: "Install MDNS Components"
   apt:
     name: "{{anxs_hostname_mdns_packages}}"
     state: present

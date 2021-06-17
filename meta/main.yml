@@ -1,10 +1,11 @@
 ---
 galaxy_info:
-  author: pjan vandaele
-  company: ANXS
-  description: sets the hostname and FQDN
-  min_ansible_version: 2.4.2.0
-  license: MIT
+  role_name: "ANXS.hostname"
+  author: "ANXS Contributors"
+  company: "ANXS"
+  description: "sets the hostname and FQDN"
+  min_ansible_version: "2.4.2.0"
+  license: "MIT"
   platforms:
     - name: Ubuntu
       versions:
@@ -12,5 +13,5 @@ galaxy_info:
   categories:
     - system
 
-dependencies: 
-  - role: ANXS.apt
+dependencies:
+  - role: "ANXS.apt"

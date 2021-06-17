@@ -5,5 +5,4 @@ Icon
 ._*
 .Spotlight-V100
 .Trashes
-.vagrant
-test
+molecule/default/roles

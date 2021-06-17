@@ -1,0 +1,25 @@
+---
+dependency:
+  name: "galaxy"
+scenario:
+  name: "default"
+  test_sequence:
+    - "dependency"
+    - "syntax"
+    - "create"
+    - "prepare"
+    - "converge"
+    - "destroy"
+platforms:
+  - name: "anxs-bionic"
+    image: "anxsscaffold/ubuntu-bionic:latest"
+    pull: false
+    privileged: true
+    command: "/lib/systemd/systemd"
+    pre_build_image: true
+provisioner:
+  name: "ansible"
+  env:
+    ANSIBLE_ROLES_PATH: "../../build/"
+driver:
+  name: "docker"
