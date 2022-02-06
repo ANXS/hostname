@@ -22,10 +22,7 @@
   lineinfile:
     dest: /etc/hosts
     regexp: "^127.0.0.1"
-    line: >
-      127.0.0.1{{'\t'}}{{inventory_hostname}}
-      % if inventory_hostname != inventory_hostname_short %}{{'\t'}}{{inventory_hostname_short}}{% endif %}
-      {{'\t'}}localhost
+    line: "127.0.0.1\t\t{{inventory_hostname}}{% if inventory_hostname != inventory_hostname_short %}\t{{inventory_hostname_short}}{% endif %}\tlocalhost"
     state: present
   when: ansible_virtualization_type != 'docker'
 
@@ -33,12 +30,15 @@
   lineinfile:
     dest: /etc/hosts
     regexp: "^::1"
-    line: >
-      ::1{{'\t\t'}}{{inventory_hostname}}
-      {% if inventory_hostname != inventory_hostname_short %}{{'\t'}}{{inventory_hostname_short}}{% endif %}
-      {{'\t'}}localhost ip6-localhost ip6-loopback
+    line: "::1\t\t{{inventory_hostname}}{% if inventory_hostname != inventory_hostname_short %}\t{{inventory_hostname_short}}{% endif %}\tlocalhost ip6-localhost ip6-loopback"
     state: present
   when: ansible_virtualization_type != 'docker'
+
+- name: "Remove raspberrypi override if exists"
+  lineinfile:
+    dest: "/etc/hosts"
+    regexp: "^127.0.1.1.+"
+    state: absent
 
 - name: "Install MDNS Components"
   apt:
