@@ -1,10 +1,23 @@
 ---
-- name: "Ensure dbus installed"
+- name: "Detect Recent OS"
+  set_fact:
+    anxs_hostname_recent: >-
+      {{ (ansible_distribution == 'Debian' and ansible_distribution_major_version|int >= 13) or
+      (ansible_distribution == 'Ubuntu'
+         and ansible_distribution_version is version('24.04', '>=')) }}
+- name: "Ensure dbus installed (legacy)"
   apt:
     name: "{{anxs_hostname_packages}}"
     state: present
   tags: hostname
-  when: ansible_os_family == "Debian"
+  when: ansible_os_family == "Debian" and not anxs_hostname_recent
+
+- name: "Ensure dbus installed (current)"
+  apt:
+    name: "{{anxs_hostname_packages + ['pkexec', 'polkitd']}}"
+    state: present
+  tags: hostname
+  when: ansible_os_family == "Debian" and anxs_hostname_recent
 
 - name: "Update the hostname (pt. 1) - hostname cmd"
   hostname:
