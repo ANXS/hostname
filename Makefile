@@ -1,23 +1,45 @@
-.PHONY = test testenv lint
+.PHONY: lint test test-debian12 test-ubuntu2004 test-ubuntu2204 test-ubuntu2404 test-all clean distclean
 
-ifndef CI
-	CI_ENV=$(shell pwd)/.ci-env/bin/
-endif
+VENV := .venv
+BIN := $(VENV)/bin
+export PATH := $(CURDIR)/$(BIN):$(PATH)
 
-testenv:
-	test -z $(CI) && (test -d .ci-env || ( mkdir .ci-env && virtualenv -p python3 .ci-env )) || true
-	test -z $(CI) && \
-		(echo "Outside CI" && .ci-env/bin/pip install -r requirements.txt --upgrade) || \
-		(echo "Within CI" && pip install -r requirements.txt)
+$(VENV): requirements-dev.txt
+	python3 -m venv $(VENV)
+	$(BIN)/pip install --upgrade pip
+	$(BIN)/pip install -r requirements-dev.txt
+	@touch $(VENV)
 
-test: testenv
-	rm -rf molecule/default/roles/ANXS.hostname && mkdir -p molecule/default/roles/ANXS.hostname
-	cp -r defaults vars meta tasks molecule/default/roles/ANXS.hostname
-	$(CI_ENV)molecule test
+lint: $(VENV)
+	$(BIN)/yamllint -c .yamllint defaults tasks vars meta
+	$(BIN)/ansible-lint -c .ansible-lint defaults tasks vars meta
 
-lint: testenv
-	$(CI_ENV)yamllint tasks/*.yml vars/*.yml defaults/*.yml ; do \
+test: lint test-all
+
+test-debian12: $(VENV)
+	MOLECULE_OS=debian MOLECULE_VERSION=12 \
+		MOLECULE_IMAGE=geerlingguy/docker-debian12-ansible:latest \
+		$(BIN)/molecule test
+
+test-ubuntu2004: $(VENV)
+	MOLECULE_OS=ubuntu MOLECULE_VERSION=2004 \
+		MOLECULE_IMAGE=geerlingguy/docker-ubuntu2004-ansible:latest \
+		$(BIN)/molecule test
+
+test-ubuntu2204: $(VENV)
+	MOLECULE_OS=ubuntu MOLECULE_VERSION=2204 \
+		MOLECULE_IMAGE=geerlingguy/docker-ubuntu2204-ansible:latest \
+		$(BIN)/molecule test
+
+test-ubuntu2404: $(VENV)
+	MOLECULE_OS=ubuntu MOLECULE_VERSION=2404 \
+		MOLECULE_IMAGE=geerlingguy/docker-ubuntu2404-ansible:latest \
+		$(BIN)/molecule test
+
+test-all: test-debian12 test-ubuntu2004 test-ubuntu2204 test-ubuntu2404
 
 clean:
-	$(CI_ENV)molecule destroy
-	rm -rf molecule/default/roles/ANXS.hostname
+	$(BIN)/molecule destroy 2>/dev/null || true
+
+distclean: clean
+	rm -rf $(VENV)

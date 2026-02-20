@@ -6,3 +6,7 @@ Icon
 .Spotlight-V100
 .Trashes
 molecule/default/roles
+
+__pycache__
+.ansible/
+.venv/

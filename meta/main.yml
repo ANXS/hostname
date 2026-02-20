@@ -1,17 +1,25 @@
 ---
 galaxy_info:
-  role_name: "ANXS.hostname"
+  role_name: "hostname"
+  namespace: "anxs"
   author: "ANXS Contributors"
   company: "ANXS"
   description: "sets the hostname and FQDN"
-  min_ansible_version: "2.4.2.0"
+  min_ansible_version: "2.12"
   license: "MIT"
   platforms:
     - name: Ubuntu
       versions:
-        - all
-  categories:
+        - focal
+        - jammy
+        - noble
+    - name: Debian
+      versions:
+        - bookworm
+  galaxy_tags:
     - system
+    - hostname
+    - networking
 
 dependencies:
   - role: "ANXS.apt"

@@ -1,60 +1,63 @@
 ---
 - name: "Detect Recent OS"
-  set_fact:
+  ansible.builtin.set_fact:
     anxs_hostname_recent: >-
       {{ (ansible_distribution == 'Debian' and ansible_distribution_major_version|int >= 13) or
       (ansible_distribution == 'Ubuntu'
          and ansible_distribution_version is version('24.04', '>=')) }}
+
 - name: "Ensure dbus installed (legacy)"
-  apt:
-    name: "{{anxs_hostname_packages}}"
+  ansible.builtin.apt:
+    name: "{{ anxs_hostname_packages }}"
     state: present
   tags: hostname
   when: ansible_os_family == "Debian" and not anxs_hostname_recent
 
 - name: "Ensure dbus installed (current)"
-  apt:
-    name: "{{anxs_hostname_packages + ['pkexec', 'polkitd']}}"
+  ansible.builtin.apt:
+    name: "{{ anxs_hostname_packages + ['pkexec', 'polkitd'] }}"
     state: present
   tags: hostname
   when: ansible_os_family == "Debian" and anxs_hostname_recent
 
 - name: "Update the hostname (pt. 1) - hostname cmd"
-  hostname:
-    name: "{{inventory_hostname_short}}"
+  ansible.builtin.hostname:
+    name: "{{ inventory_hostname_short }}"
 
-- name: Update the hostname (pt. 2) - (/etc/hostname)
-  copy:
-    content: "{{inventory_hostname_short}}{{'\n'}}"
+- name: "Update the hostname (pt. 2) - (/etc/hostname)"
+  ansible.builtin.copy:
+    content: "{{ inventory_hostname_short }}{{ '\n' }}"
     dest: /etc/hostname
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
 
 - name: "Update the IPv4 hostname (pt. 3) - (/etc/hosts)"
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/hosts
     regexp: "^127.0.0.1"
-    line: "127.0.0.1\t\t{{inventory_hostname}}{% if inventory_hostname != inventory_hostname_short %}\t{{inventory_hostname_short}}{% endif %}\tlocalhost"
+    line: >-
+      127.0.0.1		{{ inventory_hostname }}{% if inventory_hostname != inventory_hostname_short %}	{{ inventory_hostname_short }}{% endif %}	localhost
     state: present
   when: ansible_virtualization_type != 'docker'
 
 - name: "Update the IPv6 hostname (pt. 3) - (/etc/hosts)"
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/hosts
     regexp: "^::1"
-    line: "::1\t\t{{inventory_hostname}}{% if inventory_hostname != inventory_hostname_short %}\t{{inventory_hostname_short}}{% endif %}\tlocalhost ip6-localhost ip6-loopback"
+    line: >-
+      ::1		{{ inventory_hostname }}{% if inventory_hostname != inventory_hostname_short %}	{{ inventory_hostname_short }}{% endif %}	localhost ip6-localhost ip6-loopback
     state: present
   when: ansible_virtualization_type != 'docker'
 
 - name: "Remove raspberrypi override if exists"
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: "/etc/hosts"
     regexp: "^127.0.1.1.+"
     state: absent
 
 - name: "Install MDNS Components"
-  apt:
-    name: "{{anxs_hostname_mdns_packages}}"
+  ansible.builtin.apt:
+    name: "{{ anxs_hostname_mdns_packages }}"
     state: present
   when: 'ansible_os_family == "Debian" and hostname_avahi'
