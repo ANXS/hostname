@@ -1,9 +1,6 @@
 ---
 dependency:
-  name: shell
-  command: >-
-    ln -sfn ${MOLECULE_PROJECT_DIRECTORY}/../anxs-apt
-    ${MOLECULE_PROJECT_DIRECTORY}/../ANXS.apt
+  name: galaxy
 
 driver:
   name: docker
