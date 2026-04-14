@@ -1,0 +1,17 @@
+# Core testing framework
+molecule>=25.9.0
+molecule-plugins[docker]>=23.5.0
+
+# Ansible ecosystem
+ansible>=8.0.0,<12
+ansible-lint>=6.22.0
+
+# Python testing
+pytest>=7.4.0
+pytest-testinfra>=10.2.0
+
+# Code quality
+yamllint>=1.35.0
+
+# Docker support
+docker>=6.1.0

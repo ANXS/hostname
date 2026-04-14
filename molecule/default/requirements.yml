@@ -1,0 +1,9 @@
+---
+# Temporary pin to GitHub master until ANXS Galaxy namespace case-sensitivity
+# issue is resolved and a new ANXS.apt release can be published. The Galaxy
+# v2.1.0 tarball has a jinja list-concatenation bug that stringifies the
+# package list and crashes hostname's converge.
+# See: memory://planning/anxs-galaxy-and-branch-migration
+- src: https://github.com/ANXS/apt
+  name: ANXS.apt
+  version: master
